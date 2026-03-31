@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ToolStack — AI & Productivity Tools That Actually Work</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#fafaf9;--card:#fff;--text:#1a1a1a;--muted:#6b7280;--accent:#2563eb;--accent2:#7c3aed;--green:#16a34a;--orange:#ea580c;--border:#e5e7eb;--glass:rgba(255,255,255,.7)}
+body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden}
+.container{max-width:680px;margin:0 auto;padding:0 20px}
+
+/* Hero */
+.hero{text-align:center;padding:60px 0 40px;position:relative}
+.hero::before{content:'';position:absolute;top:-100px;left:50%;transform:translateX(-50%);width:600px;height:600px;background:radial-gradient(circle,rgba(37,99,235,.08) 0%,transparent 70%);pointer-events:none;z-index:0}
+.logo{font-size:28px;font-weight:800;letter-spacing:-.5px;position:relative;z-index:1}
+.logo span{color:var(--accent)}
+.tagline{font-size:15px;color:var(--muted);margin:8px 0 0;position:relative;z-index:1}
+.hero h1{font-size:clamp(28px,5vw,42px);font-weight:700;line-height:1.15;margin:32px 0 16px;letter-spacing:-.5px;position:relative;z-index:1}
+.hero h1 em{font-style:normal;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero p{font-size:17px;color:var(--muted);max-width:520px;margin:0 auto;position:relative;z-index:1}
+
+/* Stats */
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:32px 0}
+.stat{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px 16px;text-align:center}
+.stat .num{font-size:28px;font-weight:700;color:var(--accent)}
+.stat .label{font-size:13px;color:var(--muted);margin-top:4px}
+
+/* Section */
+.section{margin:48px 0}
+.section-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:2px;color:var(--accent);margin-bottom:8px}
+.section h2{font-size:24px;font-weight:700;margin-bottom:8px;letter-spacing:-.3px}
+.section p.desc{font-size:15px;color:var(--muted);margin-bottom:24px}
+
+/* Tool Cards */
+.tool-grid{display:flex;flex-direction:column;gap:12px}
+.tool{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px;display:flex;gap:16px;align-items:flex-start;transition:transform .2s,box-shadow .2s;cursor:pointer;text-decoration:none;color:inherit}
+.tool:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.06)}
+.tool-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;font-weight:700}
+.tool-body{flex:1}
+.tool-name{font-size:16px;font-weight:600}
+.tool-desc{font-size:13px;color:var(--muted);margin:4px 0 8px}
+.tool-meta{display:flex;gap:8px;flex-wrap:wrap}
+.badge{font-size:11px;padding:3px 10px;border-radius:20px;font-weight:500}
+.badge-blue{background:#eff6ff;color:#1d4ed8}
+.badge-green{background:#f0fdf4;color:#15803d}
+.badge-purple{background:#f5f3ff;color:#6d28d9}
+.badge-orange{background:#fff7ed;color:#c2410c}
+.badge-hot{background:#fef2f2;color:#dc2626}
+
+/* Categories */
+.cat-pills{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+.cat-pill{font-size:13px;padding:6px 16px;border-radius:20px;border:1px solid var(--border);background:var(--card);cursor:pointer;font-weight:500;transition:all .2s}
+.cat-pill.active,.cat-pill:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+/* Email CTA */
+.cta-box{background:linear-gradient(135deg,#1e3a5f,#2563eb);border-radius:16px;padding:40px 32px;text-align:center;color:#fff;margin:40px 0}
+.cta-box h3{font-size:22px;font-weight:700;margin-bottom:8px}
+.cta-box p{font-size:14px;opacity:.85;margin-bottom:20px}
+.cta-form{display:flex;gap:8px;max-width:420px;margin:0 auto}
+.cta-form input{flex:1;padding:12px 16px;border-radius:10px;border:none;font-size:14px;font-family:'Outfit',sans-serif;outline:none}
+.cta-form button{padding:12px 24px;border-radius:10px;border:none;background:#fff;color:var(--accent);font-weight:600;font-size:14px;cursor:pointer;font-family:'Outfit',sans-serif;white-space:nowrap;transition:transform .15s}
+.cta-form button:hover{transform:scale(1.03)}
+.cta-note{font-size:12px;opacity:.65;margin-top:12px}
+
+/* Free Resources */
+.resource{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px;margin-bottom:12px;display:flex;gap:16px;align-items:center}
+.resource-icon{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.resource-body{flex:1}
+.resource-title{font-size:15px;font-weight:600}
+.resource-desc{font-size:13px;color:var(--muted)}
+.resource-btn{font-size:13px;padding:8px 18px;border-radius:8px;border:1px solid var(--accent);color:var(--accent);background:transparent;cursor:pointer;font-weight:500;font-family:'Outfit',sans-serif;white-space:nowrap;transition:all .2s}
+.resource-btn:hover{background:var(--accent);color:#fff}
+
+/* Social */
+.social-links{display:flex;gap:12px;justify-content:center;margin:32px 0}
+.social-link{width:44px;height:44px;border-radius:12px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:18px;text-decoration:none;color:var(--text);transition:all .2s}
+.social-link:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+/* Footer */
+.footer{text-align:center;padding:40px 0;border-top:1px solid var(--border);margin-top:40px}
+.footer p{font-size:13px;color:var(--muted)}
+.disclosure{font-size:11px;color:#9ca3af;max-width:500px;margin:12px auto 0;line-height:1.5}
+
+/* Trust bar */
+.trust{display:flex;justify-content:center;gap:24px;margin:24px 0;flex-wrap:wrap}
+.trust-item{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:6px}
+.trust-dot{width:8px;height:8px;border-radius:50%;background:var(--green)}
+
+@media(max-width:480px){
+  .stats{grid-template-columns:1fr}
+  .cta-form{flex-direction:column}
+  .tool{flex-direction:column}
+  .tool-icon{width:40px;height:40px;font-size:18px}
+  .resource{flex-direction:column;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <!-- Hero -->
+  <section class="hero">
+    <div class="logo">Tool<span>Stack</span></div>
+    <p class="tagline">AI & Productivity Tools That Actually Work</p>
+    <h1>Stop wasting time on<br>the <em>wrong tools</em></h1>
+    <p>I test every AI and productivity tool so you don't have to. Only the ones worth your money make it here.</p>
+    
+    <div class="trust">
+      <span class="trust-item"><span class="trust-dot"></span>50+ tools tested</span>
+      <span class="trust-item"><span class="trust-dot"></span>Updated weekly</span>
+      <span class="trust-item"><span class="trust-dot"></span>100% honest reviews</span>
+    </div>
+  </section>
+
+  <!-- Stats -->
+  <div class="stats">
+    <div class="stat"><div class="num">50+</div><div class="label">Tools Reviewed</div></div>
+    <div class="stat"><div class="num">$2,400</div><div class="label">Saved Per Year</div></div>
+    <div class="stat"><div class="num">10hrs</div><div class="label">Saved Per Week</div></div>
+  </div>
+
+  <!-- Email CTA -->
+  <div class="cta-box">
+    <h3>Get my free AI Toolkit Guide</h3>
+    <p>The exact 7 tools I use daily to automate my workflow.<br>Plus weekly tool discoveries straight to your inbox.</p>
+    <div class="cta-form">
+      <input type="email" placeholder="Your email address">
+      <button type="button">Get Free Guide</button>
+    </div>
+    <p class="cta-note">Join 2,000+ professionals. Unsubscribe anytime.</p>
+  </div>
+
+  <!-- Top Picks -->
+  <section class="section">
+    <div class="section-label">My Top Picks</div>
+    <h2>Tools I personally use & recommend</h2>
+    <p class="desc">Every tool here has been tested for at least 30 days. I only recommend what I'd pay for myself.</p>
+
+    <div class="cat-pills">
+      <span class="cat-pill active" onclick="filterTools('all')">All</span>
+      <span class="cat-pill" onclick="filterTools('ai')">AI Tools</span>
+      <span class="cat-pill" onclick="filterTools('productivity')">Productivity</span>
+      <span class="cat-pill" onclick="filterTools('design')">Design</span>
+      <span class="cat-pill" onclick="filterTools('business')">Business</span>
+    </div>
+
+    <div class="tool-grid">
+      <!-- Tool 1 -->
+      <a href="#YOUR-AFFILIATE-LINK" class="tool" data-cat="ai" target="_blank" rel="noopener">
+        <div class="tool-icon" style="background:#f5f3ff;color:#7c3aed">J</div>
+        <div class="tool-body">
+          <div class="tool-name">Jasper AI</div>
+          <div class="tool-desc">AI writing assistant that creates marketing copy, blog posts, and social media content in seconds. Saves me 5+ hours per week.</div>
+          <div class="tool-meta">
+            <span class="badge badge-purple">AI Writing</span>
+            <span class="badge badge-green">Free Trial</span>
+            <span class="badge badge-hot">Most Popular</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Tool 2 -->
+      <a href="#YOUR-AFFILIATE-LINK" class="tool" data-cat="productivity" target="_blank" rel="noopener">
+        <div class="tool-icon" style="background:#f0fdf4;color:#16a34a">N</div>
+        <div class="tool-body">
+          <div class="tool-name">Notion</div>
+          <div class="tool-desc">The all-in-one workspace I use for project management, notes, databases, and team collaboration. Replaced 4 separate apps for me.</div>
+          <div class="tool-meta">
+            <span class="badge badge-blue">Productivity</span>
+            <span class="badge badge-green">Free Plan Available</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Tool 3 -->
+      <a href="#YOUR-AFFILIATE-LINK" class="tool" data-cat="design" target="_blank" rel="noopener">
+        <div class="tool-icon" style="background:#eff6ff;color:#2563eb">C</div>
+        <div class="tool-body">
+          <div class="tool-name">Canva Pro</div>
+          <div class="tool-desc">Design tool that makes anyone look like a pro designer. I create all my social media graphics, presentations, and thumbnails here.</div>
+          <div class="tool-meta">
+            <span class="badge badge-blue">Design</span>
+            <span class="badge badge-green">Free Trial</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Tool 4 -->
+      <a href="#YOUR-AFFILIATE-LINK" class="tool" data-cat="ai" target="_blank" rel="noopener">
+        <div class="tool-icon" style="background:#fef2f2;color:#dc2626">S</div>
+        <div class="tool-body">
+          <div class="tool-name">Synthesia</div>
+          <div class="tool-desc">Create professional AI videos from text. No camera, no studio, no editing skills needed. Perfect for faceless content creation.</div>
+          <div class="tool-meta">
+            <span class="badge badge-purple">AI Video</span>
+            <span class="badge badge-orange">High Value</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Tool 5 -->
+      <a href="#YOUR-AFFILIATE-LINK" class="tool" data-cat="business" target="_blank" rel="noopener">
+        <div class="tool-icon" style="background:#fff7ed;color:#ea580c">C</div>
+        <div class="tool-body">
+          <div class="tool-name">ConvertKit</div>
+          <div class="tool-desc">Email marketing built for creators. I use it to grow my newsletter and automate my email sequences. Simple but powerful.</div>
+          <div class="tool-meta">
+            <span class="badge badge-orange">Email Marketing</span>
+            <span class="badge badge-green">Free Plan</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Tool 6 -->
+      <a href="#YOUR-AFFILIATE-LINK" class="tool" data-cat="productivity" target="_blank" rel="noopener">
+        <div class="tool-icon" style="background:#f0f9ff;color:#0284c7">C</div>
+        <div class="tool-body">
+          <div class="tool-name">ClickUp</div>
+          <div class="tool-desc">Project management that replaced Asana, Trello, and my calendar app. Everything in one place with AI task creation.</div>
+          <div class="tool-meta">
+            <span class="badge badge-blue">Productivity</span>
+            <span class="badge badge-green">Free Plan</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Tool 7 -->
+      <a href="#YOUR-AFFILIATE-LINK" class="tool" data-cat="business" target="_blank" rel="noopener">
+        <div class="tool-icon" style="background:#ecfdf5;color:#059669">H</div>
+        <div class="tool-body">
+          <div class="tool-name">Hostinger</div>
+          <div class="tool-desc">Affordable, fast web hosting with an AI website builder included. Best value for anyone starting a website or online business.</div>
+          <div class="tool-meta">
+            <span class="badge badge-green">Web Hosting</span>
+            <span class="badge badge-hot">60% Commission</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Tool 8 -->
+      <a href="#YOUR-AFFILIATE-LINK" class="tool" data-cat="ai" target="_blank" rel="noopener">
+        <div class="tool-icon" style="background:#faf5ff;color:#9333ea">D</div>
+        <div class="tool-body">
+          <div class="tool-name">Descript</div>
+          <div class="tool-desc">AI-powered video and podcast editor. Edit video by editing text. Remove filler words with one click. Game-changer for content creators.</div>
+          <div class="tool-meta">
+            <span class="badge badge-purple">AI Video Editing</span>
+            <span class="badge badge-green">Free Plan</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Tool 9 -->
+      <a href="#YOUR-AFFILIATE-LINK" class="tool" data-cat="business" target="_blank" rel="noopener">
+        <div class="tool-icon" style="background:#fffbeb;color:#d97706">B</div>
+        <div class="tool-body">
+          <div class="tool-name">Beehiiv</div>
+          <div class="tool-desc">Newsletter platform built for growth. Built-in referral system, monetization, and SEO. The tool behind the biggest creator newsletters.</div>
+          <div class="tool-meta">
+            <span class="badge badge-orange">Newsletter</span>
+            <span class="badge badge-green">Free Plan</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Tool 10 -->
+      <a href="#YOUR-AFFILIATE-LINK" class="tool" data-cat="ai" target="_blank" rel="noopener">
+        <div class="tool-icon" style="background:#f0fdfa;color:#0d9488">N</div>
+        <div class="tool-body">
+          <div class="tool-name">NordVPN</div>
+          <div class="tool-desc">Protect your online privacy and access content worldwide. Essential tool for any professional working remotely or traveling.</div>
+          <div class="tool-meta">
+            <span class="badge badge-blue">Privacy & Security</span>
+            <span class="badge badge-hot">Up to 100% Commission</span>
+          </div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- Free Resources -->
+  <section class="section">
+    <div class="section-label">Free Resources</div>
+    <h2>Guides & downloads</h2>
+    <p class="desc">Everything you need to build a smarter workflow — completely free.</p>
+
+    <div class="resource">
+      <div class="resource-icon" style="background:#eff6ff;color:#2563eb">&#128218;</div>
+      <div class="resource-body">
+        <div class="resource-title">The AI Toolkit Guide (2026)</div>
+        <div class="resource-desc">7 AI tools that replaced my $3,000/month workflow. Step-by-step setup included.</div>
+      </div>
+      <button class="resource-btn">Download Free</button>
+    </div>
+
+    <div class="resource">
+      <div class="resource-icon" style="background:#f5f3ff;color:#7c3aed">&#128200;</div>
+      <div class="resource-body">
+        <div class="resource-title">Productivity Stack Cheatsheet</div>
+        <div class="resource-desc">My exact daily workflow: which tools I use, when, and how they connect.</div>
+      </div>
+      <button class="resource-btn">Download Free</button>
+    </div>
+
+    <div class="resource">
+      <div class="resource-icon" style="background:#f0fdf4;color:#16a34a">&#128176;</div>
+      <div class="resource-body">
+        <div class="resource-title">Free vs Paid: The Honest Comparison</div>
+        <div class="resource-desc">Which free tools are actually good enough, and which are worth paying for.</div>
+      </div>
+      <button class="resource-btn">Download Free</button>
+    </div>
+  </section>
+
+  <!-- Social Links -->
+  <section class="section" style="text-align:center">
+    <div class="section-label">Follow ToolStack</div>
+    <h2>New tool reviews every week</h2>
+    <p class="desc">Follow for daily AI tool tips, productivity hacks, and honest reviews.</p>
+    
+    <div class="social-links">
+      <a href="#" class="social-link" title="TikTok">T</a>
+      <a href="#" class="social-link" title="Instagram">I</a>
+      <a href="#" class="social-link" title="YouTube">Y</a>
+    </div>
+  </section>
+
+  <!-- Second CTA -->
+  <div class="cta-box">
+    <h3>Never miss a tool discovery</h3>
+    <p>Weekly newsletter with the best new AI tools, deals, and productivity tips.</p>
+    <div class="cta-form">
+      <input type="email" placeholder="Your email address">
+      <button type="button">Subscribe Free</button>
+    </div>
+    <p class="cta-note">No spam. Just tools that save you time and money.</p>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="logo" style="font-size:20px;margin-bottom:8px">Tool<span>Stack</span></div>
+    <p>AI & Productivity Tools That Actually Work</p>
+    <p class="disclosure">Affiliate Disclosure: Some links on this page are affiliate links. This means I may earn a small commission if you make a purchase through my link, at no extra cost to you. I only recommend products I personally use and believe in. This helps support ToolStack and allows me to continue testing and reviewing tools for you.</p>
+  </footer>
+</div>
+
+<script>
+function filterTools(cat) {
+  document.querySelectorAll('.cat-pill').forEach(p => p.classList.remove('active'));
+  event.target.classList.add('active');
+  document.querySelectorAll('.tool').forEach(t => {
+    if (cat === 'all' || t.dataset.cat === cat) {
+      t.style.display = 'flex';
+    } else {
+      t.style.display = 'none';
+    }
+  });
+}
+</script>
+</body>
+</html>
